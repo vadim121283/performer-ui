@@ -5,8 +5,7 @@ import { AppBarComponent } from '../appBar/AppBarComponent';
 import { DrawerComponent, DrawerHeader } from '../drawer/DrawerComponent';
 import { DrawerMenuItem } from '../../../data/drawer/DrawerMenuItem';
 import { useDrawerStorage } from '../../../data/drawer/DrawerStorage';
-import { gql, useQuery } from '@apollo/client';
-import { User } from '../../../common/domain/entity/User';
+import { UsersComponent } from '../users/UsersComponent';
 
 const MainPageSelector = ({
   menuItem,
@@ -15,35 +14,12 @@ const MainPageSelector = ({
 }): JSX.Element => {
   switch (menuItem) {
     case DrawerMenuItem.dashboard:
-      return <GQLTest />;
+      return <></>;
+    case DrawerMenuItem.users:
+      return <UsersComponent />;
     default:
       return <></>;
   }
-};
-
-const EX_MESSAGE = gql`
-  query ExampleQuery {
-    users {
-      guid
-      login
-    }
-  }
-`;
-
-const GQLTest = () => {
-  const { loading, error, data } = useQuery(EX_MESSAGE);
-  console.log(data);
-
-  if (loading) return <p>Loading...</p>;
-  if (error) return <p>Error :(</p>;
-
-  return data.users.map((user: User) => (
-    <div key={user.login}>
-      <p>
-        {user.login}: {user.guid}
-      </p>
-    </div>
-  ));
 };
 
 export const MainComponent = (): JSX.Element => {

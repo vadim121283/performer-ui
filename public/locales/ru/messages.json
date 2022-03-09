@@ -9,9 +9,7 @@
   "auth.error.unavailable": "Сервис недоступен",
 
   "drawer.dashboard": "Dashboard",
-  "drawer.accidents": "Аварии",
-  "drawer.operators": "Операторы",
-  "drawer.threads": "Потоки",
+  "drawer.users": "Операторы",
   "drawer.logout": "Выход",
 
   "appbar.title": "Performer"

@@ -1,13 +1,19 @@
 import { styled, Theme, CSSObject, useTheme } from '@mui/material/styles';
 import MuiDrawer from '@mui/material/Drawer';
-import { Divider, IconButton, List, ListItem, ListItemButton, ListItemIcon, ListItemText } from '@mui/material';
+import {
+  Divider,
+  IconButton,
+  List,
+  ListItem,
+  ListItemButton,
+  ListItemIcon,
+  ListItemText,
+} from '@mui/material';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import LogoutIcon from '@mui/icons-material/Logout';
 import DashboardIcon from '@mui/icons-material/Dashboard';
-import ReportProblemIcon from '@mui/icons-material/ReportProblem';
 import PeopleIcon from '@mui/icons-material/People';
-import SettingsApplicationsIcon from '@mui/icons-material/SettingsApplications';
 import { useIntl } from 'react-intl';
 import { useDrawerViewModel } from '../../view-model/drawer/DrawerViewModel';
 import { DrawerMenuItem } from '../../../data/drawer/DrawerMenuItem';
@@ -61,7 +67,13 @@ const Drawer = styled(MuiDrawer, {
   }),
 }));
 
-export const DrawerComponent = ({ open, handleDrawerClose }: { open: boolean; handleDrawerClose: () => void }) => {
+export const DrawerComponent = ({
+  open,
+  handleDrawerClose,
+}: {
+  open: boolean;
+  handleDrawerClose: () => void;
+}) => {
   const COMPONENT_ID = `DrawerComponent`;
 
   const { logout, menuItem, setMenuItem } = useDrawerViewModel();
@@ -80,22 +92,10 @@ export const DrawerComponent = ({ open, handleDrawerClose }: { open: boolean; ha
       menuItem: DrawerMenuItem.dashboard,
     },
     {
-      id: `${COMPONENT_ID}-accidents-button`,
-      text: intl.formatMessage({ id: `drawer.accidents` }),
-      icon: <ReportProblemIcon />,
-      menuItem: DrawerMenuItem.accidents,
-    },
-    {
-      id: `${COMPONENT_ID}-operators-button`,
-      text: intl.formatMessage({ id: `drawer.operators` }),
+      id: `${COMPONENT_ID}-users-button`,
+      text: intl.formatMessage({ id: `drawer.users` }),
       icon: <PeopleIcon />,
-      menuItem: DrawerMenuItem.operators,
-    },
-    {
-      id: `${COMPONENT_ID}-threads-button`,
-      text: intl.formatMessage({ id: `drawer.threads` }),
-      icon: <SettingsApplicationsIcon />,
-      menuItem: DrawerMenuItem.threads,
+      menuItem: DrawerMenuItem.users,
     },
   ];
 
@@ -111,8 +111,15 @@ export const DrawerComponent = ({ open, handleDrawerClose }: { open: boolean; ha
   return (
     <Drawer variant='permanent' open={open}>
       <DrawerHeader>
-        <IconButton id={`${COMPONENT_ID}-drawer-close-button`} onClick={handleDrawerClose}>
-          {theme.direction === 'rtl' ? <ChevronRightIcon /> : <ChevronLeftIcon />}
+        <IconButton
+          id={`${COMPONENT_ID}-drawer-close-button`}
+          onClick={handleDrawerClose}
+        >
+          {theme.direction === 'rtl' ? (
+            <ChevronRightIcon />
+          ) : (
+            <ChevronLeftIcon />
+          )}
         </IconButton>
       </DrawerHeader>
       <Divider />
@@ -132,7 +139,12 @@ export const DrawerComponent = ({ open, handleDrawerClose }: { open: boolean; ha
       <Divider />
       <List>
         {secondButtons.map((button, index) => (
-          <ListItem button id={button.id} key={button.text} onClick={button.click}>
+          <ListItem
+            button
+            id={button.id}
+            key={button.text}
+            onClick={button.click}
+          >
             <ListItemIcon>{button.icon}</ListItemIcon>
             <ListItemText primary={button.text} />
           </ListItem>

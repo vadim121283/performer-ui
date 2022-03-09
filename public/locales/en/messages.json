@@ -9,9 +9,7 @@
   "auth.error.unavailable": "Service Unavailable",
 
   "drawer.dashboard": "Dashboard",
-  "drawer.accidents": "Accidents",
-  "drawer.operators": "Operators",
-  "drawer.threads": "Threads",
+  "drawer.users": "Operators",
   "drawer.logout": "Logout",
 
   "appbar.title": "Performer"
