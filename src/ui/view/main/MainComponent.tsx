@@ -1,13 +1,12 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { Box, CssBaseline } from '@mui/material';
 
 import { AppBarComponent } from '../appBar/AppBarComponent';
 import { DrawerComponent, DrawerHeader } from '../drawer/DrawerComponent';
 import { DrawerMenuItem } from '../../../data/drawer/DrawerMenuItem';
 import { useDrawerStorage } from '../../../data/drawer/DrawerStorage';
-import { gql } from '@apollo/client';
-import { useGqlOperate } from '../../../data/graphql/GqlOperate';
-import { useGqlStorage } from '../../../data/graphql/GqlStorage';
+import { gql, useQuery } from '@apollo/client';
+import { User } from '../../../common/domain/entity/User';
 
 const MainPageSelector = ({
   menuItem,
@@ -16,13 +15,13 @@ const MainPageSelector = ({
 }): JSX.Element => {
   switch (menuItem) {
     case DrawerMenuItem.dashboard:
-      return <></>;
+      return <GQLTest />;
     default:
       return <></>;
   }
 };
 
-const exMessage = gql`
+const EX_MESSAGE = gql`
   query ExampleQuery {
     users {
       guid
@@ -31,10 +30,24 @@ const exMessage = gql`
   }
 `;
 
+const GQLTest = () => {
+  const { loading, error, data } = useQuery(EX_MESSAGE);
+  console.log(data);
+
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p>Error :(</p>;
+
+  return data.users.map((user: User) => (
+    <div key={user.login}>
+      <p>
+        {user.login}: {user.guid}
+      </p>
+    </div>
+  ));
+};
+
 export const MainComponent = (): JSX.Element => {
   const { menuItem } = useDrawerStorage();
-  const { connectGql, sendGqlMessage } = useGqlOperate();
-  const { gqlClient } = useGqlStorage();
 
   const [openDrawer, setOpenDrawer] = useState(false);
   const handleDrawerOpen = () => {
@@ -43,16 +56,6 @@ export const MainComponent = (): JSX.Element => {
   const handleDrawerClose = () => {
     setOpenDrawer(false);
   };
-
-  useEffect(() => {
-    connectGql();
-  }, []);
-
-  useEffect(() => {
-    if (gqlClient) {
-      sendGqlMessage(exMessage);
-    }
-  }, [gqlClient]);
 
   return (
     <Box sx={{ display: 'flex' }}>
