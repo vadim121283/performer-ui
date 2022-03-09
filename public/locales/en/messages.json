@@ -1,0 +1,18 @@
+{
+  "auth.title": "Login",
+  "auth.user": "User",
+  "auth.password": "Password",
+  "auth.login": "Login",
+  "auth.error.empty": "All fields must be filled",
+  "auth.error.notFound": "Server error or the address is incorrect",
+  "auth.error.forbidden": "Incorrect user/password",
+  "auth.error.unavailable": "Service Unavailable",
+
+  "drawer.dashboard": "Dashboard",
+  "drawer.accidents": "Accidents",
+  "drawer.operators": "Operators",
+  "drawer.threads": "Threads",
+  "drawer.logout": "Logout",
+
+  "appbar.title": "Performer"
+}

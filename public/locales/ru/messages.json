@@ -1,0 +1,18 @@
+{
+  "auth.title": "Вход",
+  "auth.user": "Пользователь",
+  "auth.password": "Пароль",
+  "auth.login": "Вход",
+  "auth.error.empty": "Все поля должны быть заполнены",
+  "auth.error.notFound": "Ошибка сервера или адрес указан не верно",
+  "auth.error.forbidden": "Не правильный пользователь/пароль",
+  "auth.error.unavailable": "Сервис недоступен",
+
+  "drawer.dashboard": "Dashboard",
+  "drawer.accidents": "Аварии",
+  "drawer.operators": "Операторы",
+  "drawer.threads": "Потоки",
+  "drawer.logout": "Выход",
+
+  "appbar.title": "Performer"
+}

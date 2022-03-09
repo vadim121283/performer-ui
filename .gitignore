@@ -21,3 +21,9 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+
+# development
+/public/config/config-development.json
+
+# docker tmp files
+/docker
