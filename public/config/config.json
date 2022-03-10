@@ -1,5 +1,5 @@
 {
-  "authUrl": "http://localhost:7000/api/auth",
-  "apiUrl": "http://localhost:4001/api/",
-  "gqlUrl": "http://localhost:4000/graphql"
+  "authUrl": "http://localhost/auth",
+  "apiUrl": "http://localhost/api",
+  "gqlUrl": "http://localhost/graphql"
 }
