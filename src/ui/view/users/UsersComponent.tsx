@@ -1,27 +1,27 @@
 import React from 'react';
-import { gql, useQuery } from '@apollo/client';
 import { User } from '../../../common/domain/entity/User';
+import { UsersViewModel } from '../../view-model/users/UsersViewModel';
 
-const EX_MESSAGE = gql`
-  query ExampleQuery {
-    users {
-      guid
-      login
-    }
+export const UsersComponent = ({
+  model,
+}: {
+  model: UsersViewModel;
+}): JSX.Element => {
+  const { users } = model;
+
+  if (users) {
+    return (
+      <>
+        {users.map((user: User) => (
+          <div key={user.login}>
+            <p>
+              {user.login}: {user.guid}
+            </p>
+          </div>
+        ))}
+      </>
+    );
+  } else {
+    return <></>;
   }
-`;
-
-export const UsersComponent = (): JSX.Element => {
-  const { loading, error, data } = useQuery(EX_MESSAGE);
-
-  if (loading) return <p>Loading...</p>;
-  if (error) return <p>Error :(</p>;
-
-  return data.users.map((user: User) => (
-    <div key={user.login}>
-      <p>
-        {user.login}: {user.guid}
-      </p>
-    </div>
-  ));
 };

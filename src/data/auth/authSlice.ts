@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { User } from '../../common/domain/entity/User';
 import type { RootState } from '../redux/ReactRedux';
-import { User } from '../../domain/entity/auth/models/User';
 
 interface InitState {
   isAuthorized: boolean;

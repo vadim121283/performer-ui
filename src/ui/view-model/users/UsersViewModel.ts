@@ -1,13 +1,13 @@
-import { useInjection } from '../../../di/inject';
-import { useInitialize } from '../../../domain/use-cases/init/initialize';
+import { User } from '../../../common/domain/entity/User';
+import { useUsersGql } from '../../../data/users/UsersGql';
 
 export interface UsersViewModel {
-  initialize(): Promise<boolean>;
+  users: User[] | undefined;
 }
 
 export function useUsersViewModel(): UsersViewModel {
-  const { initialize } = useInitialize(useInjection);
+  const { users } = useUsersGql();
   return {
-    initialize,
+    users,
   };
 }

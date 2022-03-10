@@ -1,4 +1,4 @@
-import { User } from '../../domain/entity/auth/models/User';
+import { User } from '../../common/domain/entity/User';
 import { AuthStoragePort } from '../../domain/ports/auth/AuthStoragePort';
 import { useAppDispatch, useAppSelector } from '../redux/ReduxHooks';
 import {
@@ -16,24 +16,29 @@ export function useAuthStorage(): AuthStoragePort {
   const user = useAppSelector(selectUser);
   const authError = useAppSelector(selectAuthError);
 
-  function getAuthLocalStorage() {
-    const login = localStorage.getItem(`login`);
-    const token = localStorage.getItem(`token`);
-    if (login && token) return { login, token };
+  function getAuthLocalStorage(): User {
+    let user = {
+      guid: localStorage.getItem(`auth_guid`) || '',
+      login: localStorage.getItem(`auth_login`) || '',
+      token: localStorage.getItem(`auth_token`) || '',
+    };
+    return user;
   }
 
   function setAuthLocalStorage(value: User) {
-    if (value.login && value.token) {
-      localStorage.setItem(`userName`, value.login);
-      localStorage.setItem(`token`, value.token);
+    if (value.guid && value.login && value.token) {
+      localStorage.setItem(`auth_guid`, value.guid);
+      localStorage.setItem(`auth_login`, value.login);
+      localStorage.setItem(`auth_token`, value.token);
       return true;
     }
     return false;
   }
 
   function removeAuthLocalStorage() {
-    localStorage.removeItem(`userName`);
-    localStorage.removeItem(`token`);
+    localStorage.removeItem(`auth_guid`);
+    localStorage.removeItem(`auth_login`);
+    localStorage.removeItem(`auth_token`);
   }
 
   return {

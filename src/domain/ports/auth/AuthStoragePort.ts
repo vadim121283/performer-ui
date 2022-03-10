@@ -1,4 +1,4 @@
-import { User } from '../../entity/auth/models/User';
+import { User } from '../../../common/domain/entity/User';
 
 export interface AuthStoragePort {
   isAuthorized: boolean;

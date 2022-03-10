@@ -1,4 +1,4 @@
-import { User } from '../../domain/entity/auth/models/User';
+import { User } from '../../common/domain/entity/User';
 import { AuthApiPort } from '../../domain/ports/auth/AuthApiPort';
 import { useLogger } from '../../utils/logger';
 import { useRest } from '../rest';

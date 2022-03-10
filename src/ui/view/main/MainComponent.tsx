@@ -6,6 +6,9 @@ import { DrawerComponent, DrawerHeader } from '../drawer/DrawerComponent';
 import { DrawerMenuItem } from '../../../data/drawer/DrawerMenuItem';
 import { useDrawerStorage } from '../../../data/drawer/DrawerStorage';
 import { UsersComponent } from '../users/UsersComponent';
+import { useUsersViewModel } from '../../view-model/users/UsersViewModel';
+
+const Users = () => <UsersComponent model={useUsersViewModel()} />;
 
 const MainPageSelector = ({
   menuItem,
@@ -16,7 +19,7 @@ const MainPageSelector = ({
     case DrawerMenuItem.dashboard:
       return <></>;
     case DrawerMenuItem.users:
-      return <UsersComponent />;
+      return <Users />;
     default:
       return <></>;
   }
