@@ -13,7 +13,7 @@ export const UsersComponent = ({
     return (
       <>
         {users.map((user: User) => (
-          <div key={user.login}>
+          <div key={user.guid}>
             <p>
               {user.login}: {user.guid}
             </p>
