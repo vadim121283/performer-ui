@@ -7,6 +7,8 @@ const QUERY_MSG = gql`
     users {
       guid
       login
+      name
+      surname
     }
   }
 `;
@@ -15,6 +17,8 @@ export function useUsersGql(): UsersGqlPort {
   const { loading, error, data, refetch, networkStatus } =
     useQuery<{ users: User[] }>(QUERY_MSG);
   const users = data?.users;
+  console.log('TT ', data);
+
   return {
     users,
     refetchUsers() {
