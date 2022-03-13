@@ -3,9 +3,9 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import { ContextProvider } from './data/ReactContext';
+import { ContextProvider } from './app/ReactContext';
 import { Provider } from 'react-redux';
-import { store } from './data/redux/ReactRedux';
+import { store } from './app/redux/ReactRedux';
 
 ReactDOM.render(
   <React.StrictMode>

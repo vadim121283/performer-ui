@@ -2,21 +2,21 @@ import React from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { IntlProvider } from 'react-intl';
 import { ApolloProvider } from '@apollo/client';
-import { InitComponent } from './ui/view/init/InitComponent';
-import { AuthComponent } from './ui/view/auth/AuthComponent';
-import { MainComponent } from './ui/view/main/MainComponent';
-import { useInitViewModel } from './ui/view-model/init/InitViewModel';
-import { useAuthViewModel } from './ui/view-model/auth/AuthViewModel';
-import { useInitStorage } from './data/init/InitStorage';
-import { useAuthStorage } from './data/auth/AuthStorage';
-import { connectApolloClient } from './data/graphql/connectApolloClient';
+import { InitView } from './app/init/init.view';
+import { AuthView } from './app/auth/auth.view';
+import { MainView } from './app/main/main.view';
+import { useInitViewModel } from './app/init/init.view.model';
+import { useAuthViewModel } from './app/auth/auth.view.model';
+import { connectApolloClient } from './utils/graphql/connectApolloClient';
+import { useInitService } from './app/init/init.service';
+import { useAuthService } from './app/auth/auth.service';
 
-const Init = () => <InitComponent model={useInitViewModel()} />;
-const Auth = () => <AuthComponent model={useAuthViewModel()} />;
+const Init = () => <InitView model={useInitViewModel()} />;
+const Auth = () => <AuthView model={useAuthViewModel()} />;
 
 function App() {
-  const { isInitialized, locale, config } = useInitStorage();
-  const { isAuthorized, user } = useAuthStorage();
+  const { isInitialized, locale, config } = useInitService();
+  const { isAuthorized, user } = useAuthService();
 
   const AppInitialized = () => {
     const Main = () => {
@@ -24,7 +24,7 @@ function App() {
         const client = connectApolloClient(config.gqlUrl, user?.token);
         return (
           <ApolloProvider client={client}>
-            <MainComponent />
+            <MainView />
           </ApolloProvider>
         );
       }
