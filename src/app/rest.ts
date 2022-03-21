@@ -1,13 +1,13 @@
-import { useInitService } from './init/init.service';
+import { useInitStorage } from './init/init.service';
 import { useLogger } from '../utils/logger';
-import { useAuthService } from './auth/auth.service';
+import { useAuthStorage } from './auth/auth.service';
 
 type Methods = 'GET' | 'POST';
 
 export function useRest() {
-  const { config } = useInitService();
-  const { user } = useAuthService();
-  const { error } = useLogger('InitApi');
+  const { config } = useInitStorage();
+  const { user } = useAuthStorage();
+  const { error } = useLogger('rest');
 
   async function fetching(
     url: string,
@@ -61,17 +61,12 @@ export function useRest() {
     return fetching(`${config.apiUrl}${url}`, 'POST', true, data);
   }
 
-  function getLocal(url: string) {
-    return fetching(url, 'GET');
-  }
-
   function postLogin(data: { login: string; password: string }) {
     return fetching(`${config.authUrl}`, 'POST', true, data);
   }
 
   return {
     get,
-    getLocal,
     post,
     postLogin,
   };

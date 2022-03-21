@@ -1,10 +1,10 @@
 import { DIContainerType } from '../../app/di/DIContext';
 // TODO: Add tests
 export const useLogin = (useInjection: () => DIContainerType) => {
-  const { useAuthService, useLogger } = useInjection();
+  const { useAuthApi, useAuthStorage, useLogger } = useInjection();
   const { debug } = useLogger(`login`);
-  const { loginRequest, setIsAuthorized, setUser, setAuthLocalStorage } =
-    useAuthService();
+  const { setIsAuthorized, setUser, setAuthLocalStorage } = useAuthStorage();
+  const { loginRequest } = useAuthApi();
 
   async function loginUser(login: string, password: string) {
     const loadUser = await loginRequest(login, password);

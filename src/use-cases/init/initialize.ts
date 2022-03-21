@@ -1,9 +1,9 @@
 import { DIContainerType } from '../../app/di/DIContext';
 
 export function useInitialize(useInjection: () => DIContainerType) {
-  const { useInitService, useLogger } = useInjection();
-  const { loadConfig, setConfig, loadLocales, setLocale, setInitialized } =
-    useInitService();
+  const { useInitApi, useInitStorage, useLogger } = useInjection();
+  const { setConfig, setLocale, setInitialized } = useInitStorage();
+  const { loadConfig, loadLocales } = useInitApi();
   const { debug, error } = useLogger(`initialize`);
 
   async function initialize() {

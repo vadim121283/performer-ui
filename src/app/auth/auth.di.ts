@@ -1,5 +1,6 @@
-import { useAuthService } from './auth.service';
+import { useAuthStorage, useAuthApi } from './auth.service';
 
 export const authDi = {
-  useAuthService,
+  useAuthStorage,
+  useAuthApi,
 };

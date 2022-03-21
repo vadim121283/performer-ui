@@ -1,10 +1,10 @@
 import { DIContainerType } from '../../app/di/DIContext';
 // TODO: Add tests
 export const useLogout = (useInjection: () => DIContainerType) => {
-  const { useAuthService, useLogger } = useInjection();
+  const { useAuthStorage, useLogger } = useInjection();
   const { debug } = useLogger(`logout`);
   const { setIsUnauthorized, setUser, removeAuthLocalStorage } =
-    useAuthService();
+    useAuthStorage();
 
   async function logout() {
     debug(`Logout user`);

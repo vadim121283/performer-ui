@@ -1,5 +1,6 @@
-import { useInitService } from './init.service';
+import { useInitStorage, useInitApi } from './init.service';
 
 export const initDi = {
-  useInitService,
+  useInitStorage,
+  useInitApi,
 };

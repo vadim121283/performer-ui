@@ -1,5 +1,5 @@
 import { User } from '../../common/domain/entity/User';
-import { AuthPort } from './auth.port';
+import { AuthApiPort, AuthStoragePort } from './auth.port';
 import { useLogger } from '../../utils/logger';
 import { useRest } from '../rest';
 import { authValidator } from './auth.validator';
@@ -13,28 +13,7 @@ import {
   setAuthError,
 } from './auth.slice';
 
-export function useAuthService(): AuthPort {
-  const { postLogin } = useRest();
-  const { error } = useLogger(`AuthService`);
-
-  const loginRequest = async (login: string, password: string) => {
-    const response = await postLogin({
-      login,
-      password,
-    });
-    if (response) {
-      if (response.ok) {
-        const user = (await response.json()) as User;
-        if (user) {
-          return user;
-        }
-      } else {
-        setAuthError(authValidator(response));
-      }
-    }
-    error(`Cant authorize`);
-  };
-
+export function useAuthStorage(): AuthStoragePort {
   const dispatch = useAppDispatch();
   const isAuthorized = useAppSelector(selectIsAuthorized);
   const user = useAppSelector(selectUser);
@@ -66,7 +45,6 @@ export function useAuthService(): AuthPort {
   }
 
   return {
-    loginRequest,
     isAuthorized,
     setIsAuthorized() {
       return dispatch(setIsAuthorized(true));
@@ -85,5 +63,33 @@ export function useAuthService(): AuthPort {
     getAuthLocalStorage,
     setAuthLocalStorage,
     removeAuthLocalStorage,
+  };
+}
+
+export function useAuthApi(): AuthApiPort {
+  const { postLogin } = useRest();
+  const { error } = useLogger(`AuthApi`);
+  const { setAuthError } = useAuthStorage();
+
+  const loginRequest = async (login: string, password: string) => {
+    const response = await postLogin({
+      login,
+      password,
+    });
+    if (response) {
+      if (response.ok) {
+        const user = (await response.json()) as User;
+        if (user) {
+          return user;
+        }
+      } else {
+        setAuthError(authValidator(response));
+      }
+    }
+    error(`Cant authorize`);
+  };
+
+  return {
+    loginRequest,
   };
 }

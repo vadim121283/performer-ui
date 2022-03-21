@@ -1,7 +1,6 @@
 import { User } from '../../common/domain/entity/User';
 
-export interface AuthPort {
-  loginRequest(user: string, password: string): Promise<User | undefined>;
+export interface AuthStoragePort {
   isAuthorized: boolean;
   setIsAuthorized(): void;
   setIsUnauthorized(): void;
@@ -12,4 +11,8 @@ export interface AuthPort {
   getAuthLocalStorage(): User | undefined;
   setAuthLocalStorage(value: User): boolean;
   removeAuthLocalStorage(): void;
+}
+
+export interface AuthApiPort {
+  loginRequest(user: string, password: string): Promise<User | undefined>;
 }

@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useAuthService } from './auth.service';
+import { useAuthStorage } from './auth.service';
 import { useInjection } from '../di/inject';
 import { useLogin } from '../../use-cases/auth/loginUser';
 import { useFormValidator } from '../../utils/FormValidator';
@@ -18,7 +18,7 @@ export function useAuthViewModel(): AuthViewModel {
   const [login, setLogin] = useState(``);
   const [password, setPassword] = useState(``);
   const { loginUser } = useLogin(useInjection);
-  const { authError, setAuthError } = useAuthService();
+  const { authError, setAuthError } = useAuthStorage();
 
   const loginButton = () => {
     setAuthError(undefined);

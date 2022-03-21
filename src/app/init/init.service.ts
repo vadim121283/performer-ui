@@ -1,9 +1,8 @@
 import { Config } from './model/Config';
 import { AppLocales, Locale, Locales, LocalesConfig } from './model/Locales';
-import { InitPort } from './init.port';
+import { InitApiPort, InitStoragePort } from './init.port';
 import { asyncProcessArray } from '../../utils/asyncProcessArray';
 import { useLogger } from '../../utils/logger';
-import { useRest } from '../rest';
 import {
   selectConfig,
   selectIsInitialized,
@@ -18,18 +17,61 @@ const CONFIG_URL = '/config/config.json';
 const CONFIG_DEVELOPMENT_URL = '/config/config-development.json';
 const LOCALES_CONFIG_URL = '/locales/locales_config.json';
 
-export function useInitService(): InitPort {
-  const { getLocal } = useRest();
-  const { error } = useLogger('InitService');
+async function fetching(url: string) {
+  let options: RequestInit = {
+    method: 'GET',
+  };
 
+  try {
+    const response = await fetch(url, options);
+    switch (response.status) {
+      case 200:
+        return response;
+      case 404:
+        console.error('Not found url: ', url);
+        return response;
+      case 403:
+        console.error('Forbidden url or wrong login/password: ', url);
+        return response;
+      case 503:
+        console.error('Service Unavailable', url);
+        return response;
+      default:
+        return response;
+    }
+  } catch (err) {
+    console.error('Cant fetch url: ', url);
+  }
+}
+
+export function useInitStorage(): InitStoragePort {
   const dispatch = useAppDispatch();
   const isInitialized = useAppSelector(selectIsInitialized);
   const config = useAppSelector(selectConfig);
   const locale = useAppSelector(selectLocale);
 
+  return {
+    isInitialized,
+    setInitialized() {
+      return dispatch(setInitialized());
+    },
+    config,
+    setConfig(value) {
+      return dispatch(setConfig(value));
+    },
+    locale,
+    setLocale(value) {
+      return dispatch(setLocale(value));
+    },
+  };
+}
+
+export function useInitApi(): InitApiPort {
+  const { error } = useLogger('InitApi');
+
   async function loadConfig() {
     const tryDevelopConfigLoad = async () => {
-      const response = await getLocal(CONFIG_DEVELOPMENT_URL);
+      const response = await fetching(CONFIG_DEVELOPMENT_URL);
       if (response) {
         try {
           const config = (await response.json()) as Promise<Config>;
@@ -41,7 +83,7 @@ export function useInitService(): InitPort {
     };
 
     const productionConfigLoad = async () => {
-      const response = await getLocal(CONFIG_URL);
+      const response = await fetching(CONFIG_URL);
       if (response) {
         try {
           const config = (await response.json()) as Promise<Config>;
@@ -60,7 +102,7 @@ export function useInitService(): InitPort {
   }
 
   async function loadLocales() {
-    const response = await getLocal(LOCALES_CONFIG_URL);
+    const response = await fetching(LOCALES_CONFIG_URL);
     if (response) {
       try {
         const localesConfig = (await response.json()) as LocalesConfig;
@@ -70,7 +112,7 @@ export function useInitService(): InitPort {
         } = { locales: {}, locales_config: localesConfig };
 
         const addLocale = async (localeName: AppLocales) => {
-          const responseLocale = await getLocal(
+          const responseLocale = await fetching(
             `/locales/${localeName}/messages.json`
           );
           if (responseLocale) {
@@ -99,17 +141,5 @@ export function useInitService(): InitPort {
   return {
     loadConfig,
     loadLocales,
-    isInitialized,
-    setInitialized() {
-      return dispatch(setInitialized());
-    },
-    config,
-    setConfig(value) {
-      return dispatch(setConfig(value));
-    },
-    locale,
-    setLocale(value) {
-      return dispatch(setLocale(value));
-    },
   };
 }
