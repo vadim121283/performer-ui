@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useAuthStorage } from './auth.service';
 import { useInjection } from '../di/inject';
 import { useLogin } from '../../use-cases/auth/loginUser';
-import { useFormValidator } from '../../utils/RRRormValidator';
+import { useFormValidator } from '../../utils/formValidator';
 
 export interface AuthViewModel {
   login: string;
